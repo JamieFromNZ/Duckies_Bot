@@ -7,6 +7,7 @@ class CommandManager {
     constructor(bot) {
         // Map of all command file directories
         this.commandsDataArr = new Array();
+        this.adminCommandsDataArr = new Array(); // commands that are only for the devs
     }
 
     // Load all command files from each subdirectory in the commands directory.
@@ -32,8 +33,15 @@ class CommandManager {
                 }
             }
 
-            await this.commandsDataArr.push(commandData);
+            console.log(subdir);
+            if (subdir === "admin") { // only register admin cmds in test guild so don't add them to commmandsDataArr (global cmds)
+                await this.adminCommandsDataArr.push(commandData);
+            } else {
+                await this.commandsDataArr.push(commandData);
+            }
         }
+
+        console.log(this.commandsDataArr, this.adminCommandsDataArr)
 
         const rest = new REST({ version: '10' }).setToken(bot.token);
         try {
@@ -41,7 +49,14 @@ class CommandManager {
                 Routes.applicationCommands(bot.client.user.id),
                 { body: this.commandsDataArr }
             );
-            console.log(`Successfully registered commands`);
+            console.log(`Successfully registered global commands`);
+
+            await rest.put(
+                Routes.applicationGuildCommands(bot.client.user.id, bot.devGuild),
+                { body: this.adminCommandsDataArr }
+            );
+            console.log(`Successfully registered admin commands`);
+
         } catch (error) {
             console.error(error);
         }

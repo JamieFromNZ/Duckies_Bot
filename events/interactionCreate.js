@@ -12,8 +12,6 @@ module.exports = {
                 interaction
             );
 
-            console.log(interaction.options);
-            console.log(await interaction.options.getSubcommand());
             const command = await require('../commands/' + interaction.commandName + '/' + await interaction.options.getSubcommand(false) + '.js');
 
             if (!command) {
