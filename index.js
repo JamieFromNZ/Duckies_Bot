@@ -11,5 +11,5 @@ bot.client.on('ready', () => {
 
     bot.commandManager.loadCmds(bot);
     bot.eventManager.load(bot);
-    bot.keepAlive.start(bot);
+    //bot.keepAlive.start(bot);
 });

@@ -5,6 +5,7 @@ require('dotenv').config();
 const EventManager = require('./EventManager.js');
 const CommandManager = require('./CommandManager.js');
 const KeepAlive = require('./KeepAlive.js');
+const EmbedManager = require('./EmbedManager.js');
 
 class Bot {
     constructor() {
@@ -15,6 +16,11 @@ class Bot {
         this.eventManager = new EventManager(this);
         this.commandManager = new CommandManager(this);
         this.keepAlive = new KeepAlive(this);
+        this.embedManager = new EmbedManager(this);
+
+        // might put this in config.json later TODO
+        this.devGuild = '1006640528189829245';
+        this.mainGuild = '799038547399016450';
 
         // Token
         this.token = process.env.TOKEN;
