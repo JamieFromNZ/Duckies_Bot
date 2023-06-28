@@ -16,18 +16,21 @@ module.exports = {
         let embed = await bot.embedManager.getBaseEmbed()
         embed.setTitle(`User information ${target.username}`)
         embed.setAuthor({ name: target.tag, iconURL: target.displayAvatarURL({ dynamic: true }) })
-        embed.setColor(target.accentColor)
         embed.setThumbnail(target.displayAvatarURL({ dynamic: true }))
         embed.addFields(
           { name: 'Username', value: target.username, inline: true },
-          { name: 'ID', value: target.id },
-          { name: 'Avatar URL', value: `[Click Here](${target.displayAvatarURL()})`, inline: true },
+          { name: 'ID', value: target.id, inline: true },
+          { name: '\u200B', value: '\u200B' },
+          { name: 'Avatar URL', value: `[Click Here](${target.displayAvatarURL() || "https://www.youtube.com/watch?v=dQw4w9WgXcQ"})`, inline: true },
           { name: 'Banner URL', value: `[Click Here](${target.bannerURL() || "https://www.youtube.com/watch?v=dQw4w9WgXcQ"})`, inline: true },
+          { name: '\u200B', value: '\u200B' },
           { name: 'Account Creation', value: target.createdAt.toDateString(), inline: true },
+          { name: 'Member Creation', value: member.joinedAt.toDateString(), inline: true },
+          { name: '\u200B', value: '\u200B' },
           { name: 'Status', value: member.presence?.status || 'Unavailable', inline: true },
-          { name: 'Current Activity', value: member.presence?.activities[0] ? member.presence?.activities[0].name : 'None' },
+          { name: 'Current Activity', value: member.presence?.activities[0] ? member.presence?.activities[0].name : 'None',  inline: true },
           { name: 'Roles', value: member.roles.cache.map(role => role.toString()).join(', '), inline: true },
-          { name: 'Badges', value: `${await target.fetchFlags()}`, inline: true }
+          { name: 'Badges', value: `${await target.flags.toArray().toString() || 'None'}`, inline: true }
         );
         return await interaction.reply({ embeds: [embed] });
     }
