@@ -2,14 +2,15 @@ module.exports = {
     data: {
         name: 'user',
         aliases: ['userinfo', 'u'],
-        parameters: 1,
+        minParameters: 1,
         description: 'tbd',
         ownerOnly: false,
     },
 
-    async execute(interaction, bot, args) {
-        let target = await interaction.options.getUser('user');
-        let member = await interaction.guild.members.cache.get(target.id);
+    async execute(message, bot, args) {
+        let target = await bot.getUserFromMentionOrId(args[0]);
+
+        let member = await message.guild.members.cache.get(target.id);
 
         console.log(await target.fetchFlags());
         console.log(await target.flags.toArray());
@@ -33,6 +34,6 @@ module.exports = {
           { name: 'Roles', value: member.roles.cache.map(role => role.toString()).join(', '), inline: true },
           { name: 'Badges', value: `${await target.flags.toArray().toString() || 'None'}`, inline: true }
         );
-        return await interaction.reply({ embeds: [embed] });
+        return await message.channel.send({ embeds: [embed] });
     }
 };

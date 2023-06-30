@@ -32,6 +32,24 @@ class Bot {
         console.log('Logging in...');
         return this.client.login(this.token);
     }
+
+    // Maybe put this into utils later
+    async getUserFromMentionOrId(mention) {
+        if (!mention) return;
+
+        if (mention.startsWith('<@') && mention.endsWith('>')) {
+            mention = mention.slice(2, -1);
+    
+            if (mention.startsWith('!')) {
+                mention = mention.slice(1);
+            }
+    
+            return this.client.users.cache.get(mention);
+        } else {
+            // If the parameter is simply a user id
+            return this.client.users.cache.get(mention);
+        }
+    }
 }
 
 module.exports = Bot;

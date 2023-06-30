@@ -22,8 +22,8 @@ class CommandManager {
                     commandData = {
                         name: path.basename(item, '.js'),
                         description: itemFile.data.description,
-                        parameters: itemFile.data.parameters,
-                        parameters: itemFile.data.aliases,
+                        minParameters: itemFile.data.minParameters, // TODO: Setup aliases (under)
+                        aliases: itemFile.data.aliases,
                         type: subdir,
                         ownerOnly: itemFile.data.ownerOnly,
                     };

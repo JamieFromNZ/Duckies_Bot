@@ -22,7 +22,8 @@ module.exports = {
             return await message.channel.send( { embeds: [emb] } );
         }
 
-        if (args.length < commandData.parameters) {
+        console.log(args.length, commandData.minParameters, args.length < commandData.minParameters);
+        if (args.length < commandData.minParameters) {
             let emb = await bot.embedManager.getErrorEmbed();
             emb.setDescription("Too few args specified.");
             return await message.channel.send( { embeds: [emb] } );
@@ -31,7 +32,7 @@ module.exports = {
         const command = await require('../commands/' + commandData.type + '/' + commandData.name + '.js');
 
         try {
-            await command.execute(message, bot), args;
+            await command.execute(message, bot, args);
         } catch (error) {
             console.error(error);
             let emb = await bot.embedManager.getErrorEmbed();
