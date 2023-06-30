@@ -10,7 +10,7 @@ const EmbedManager = require('./EmbedManager.js');
 class Bot {
     constructor() {
         // Initialize Discord client for bot
-        this.client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildEmojisAndStickers, GatewayIntentBits.GuildPresences, GatewayIntentBits.MessageContent] });
+        this.client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildEmojisAndStickers, GatewayIntentBits.GuildPresences, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers] });
 
         // Initialise main managers for bot
         this.eventManager = new EventManager(this);
