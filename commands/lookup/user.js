@@ -2,13 +2,16 @@ module.exports = {
     data: {
         name: 'user',
         aliases: ['userinfo', 'u'],
-        minParameters: 1,
+        minParameters: 0,
         description: 'tbd',
         ownerOnly: false,
     },
 
     async execute(message, bot, args) {
         let target = await bot.getUserFromMentionOrId(args[0]);
+        if (args.length === 0) {
+            target = message.author;
+        }
 
         let member = await message.guild.members.cache.get(target.id);
 

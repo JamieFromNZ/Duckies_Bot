@@ -14,12 +14,10 @@ class CommandManager {
         const subdirectories = fs.readdirSync('commands').filter(subdir => fs.statSync(path.join('commands', subdir)).isDirectory());
 
         for (const subdir of subdirectories) {
-            let commandData = {};
-
             for (const item of fs.readdirSync(path.join('commands', subdir))) {
                 if (path.extname(item) === '.js') {
                     const itemFile = require('../commands/' + subdir + '/' + item);
-                    commandData = {
+                    let commandData = {
                         name: path.basename(item, '.js'),
                         description: itemFile.data.description,
                         minParameters: itemFile.data.minParameters, // TODO: Setup aliases (under)
@@ -27,10 +25,10 @@ class CommandManager {
                         type: subdir,
                         ownerOnly: itemFile.data.ownerOnly,
                     };
+
+                    await this.commandsDataArr.push(commandData);
                 }
             }
-
-            await this.commandsDataArr.push(commandData);
         }
 
         console.log(this.commandsDataArr);
