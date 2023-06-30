@@ -1,12 +1,13 @@
-const { SlashCommandBuilder } = require('discord.js');
-
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('user')
-        .setDescription('Looks up a user with ID.')
-        .addUserOption(option => option.setName('user').setDescription('The user to lookup').setRequired(true)),
+    data: {
+        name: 'user',
+        aliases: ['userinfo', 'u'],
+        parameters: 1,
+        description: 'tbd',
+        ownerOnly: false,
+    },
 
-    async execute(interaction, bot) {
+    async execute(interaction, bot, args) {
         let target = await interaction.options.getUser('user');
         let member = await interaction.guild.members.cache.get(target.id);
 

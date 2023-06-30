@@ -10,7 +10,7 @@ const EmbedManager = require('./EmbedManager.js');
 class Bot {
     constructor() {
         // Initialize Discord client for bot
-        this.client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildEmojisAndStickers, GatewayIntentBits.GuildPresences] });
+        this.client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildEmojisAndStickers, GatewayIntentBits.GuildPresences, GatewayIntentBits.MessageContent] });
 
         // Initialise main managers for bot
         this.eventManager = new EventManager(this);
@@ -18,9 +18,11 @@ class Bot {
         this.keepAlive = new KeepAlive(this);
         this.embedManager = new EmbedManager(this);
 
-        // might put this in config.json later TODO
+        // might put this in config.json later TODO:
         this.devGuild = '1006640528189829245';
         this.mainGuild = '799038547399016450';
+        this.prefix = 'd!';
+        this.devIds = ['422603238936936450', '441178576952360970'];
 
         // Token
         this.token = process.env.TOKEN;
